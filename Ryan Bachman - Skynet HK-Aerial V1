@@ -1,0 +1,74 @@
+// Ryan Bachman
+// Skynet HK-Aerial V1 assignment.
+// October 14, 2018
+// CSC215 C/C++ Programming
+
+// Preprocessor directive for console input and output.
+#include <iostream>
+// Preprocessor directive for using the "random number generator".
+#include <cstdlib>
+//Preprocessor directive for time to pass the unsigned date and time for seeding the random number.
+#include <ctime>
+
+// Global declaration so that I don't have to keep typing std:: for every cout.
+using namespace std;
+
+int main() {
+    // Seed random number generator.
+    srand(static_cast<unsigned int>(time(0)));
+
+    // Random number between 1 and 64 (for 8x8 grid).
+    int enemyLocation = rand() % 64 + 1;
+    // Keeps track of how many times the UAV pings its radar. Starts at 1 since we don't want ping 0.
+    int pings = 1;
+    // Sets the low number to 1, so that the prediction can be run in between this and the high number.
+    int searchGridLowNumber = 1;
+    // Sets the low number to 64, so that the prediction can be run in between this and the low number.
+    int searchGridHighNumber = 64;
+    // Initializes the location prediction integer as 0, so it exists at the start of the program.
+    int targetLocationPrediction = 0;
+
+    cout << "\n\nGenerating random enemy location on 8x8 grid....\n";
+    cout << "The enemy is located at location #" << enemyLocation << " on the 8x8 grid with 1-64 sectors\n";
+    cout << "Skynet HK-Aerial Initializing Software.....\n";
+    cout << "===========================================================================================\n";
+
+    // Do while loop, that runs as long as the UAV prediction is not equal to the enemy's current location.
+    do
+    {
+        // At the start of the loop, it sets the location prediction to the number in the middle of the low number and high number using arithmetic.
+        targetLocationPrediction = ((searchGridHighNumber - searchGridLowNumber) / 2) + searchGridLowNumber;
+
+        cout << "Skynet HK-Aerial Radar sending out ping #" << pings << "....." << endl;
+        // Adds one to ping to keep track of how many attempts it took to find the enemy.
+        ++pings;
+
+        // If statement saying that if the prediction is lower than the actual location, it sets the new low number to shrink the search area.
+        if (targetLocationPrediction < enemyLocation)
+        {
+            searchGridLowNumber = targetLocationPrediction;
+            cout << "The target location prediction of " << targetLocationPrediction << " was lower than the actual enemy location of " << enemyLocation << ".\n";
+            cout << "The new searchGridLowNumber is " << searchGridLowNumber << ".\n";
+            cout << "===========================================================================================================================================\n";
+        }
+        // Else if statement saying that if the prediction is higher than the actual location, it sets the new high number to shrink the search area.
+        else if (targetLocationPrediction > enemyLocation)
+        {
+            searchGridHighNumber = targetLocationPrediction;
+            cout << "The target location prediction of " << targetLocationPrediction << " was higher than the actual enemy location of " << enemyLocation << ".\n";
+            cout << "The new searchGridHighNumber is " << searchGridHighNumber << ".\n";
+            cout << "===========================================================================================================================================\n";
+        }
+        // Else statement saying that if the prediction is correct, it outputs number of guesses and will end the loop.
+        else
+        {
+            cout << "Enemy was hiding at location #" << enemyLocation << ".\n";
+            cout << "Enemy was found at location #" << targetLocationPrediction << ".\n";
+            // This cout needed to be noted because for some reason pings is one higher than the actual attempts, so I had to subtract 1 until I figure out why.
+            cout << "Skynet HK-Aerial Software took " << pings - 1 << " predictions to find the enemy location on a grid size of 8x8 (64).\n\n";
+        }
+    } while (targetLocationPrediction != enemyLocation);
+
+    // Returns 0 to end the program.
+    return 0;
+}
