@@ -1,0 +1,7 @@
+﻿  Interface.cpp
+C:\Users\ryan.b\source\repos\Bachman_BinarySearchTree\Bachman_BinarySearchTree\AVLTree.h(131,15): error C3861:  'value': identifier not found
+  Source.cpp
+C:\Users\ryan.b\source\repos\Bachman_BinarySearchTree\Bachman_BinarySearchTree\AVLTree.h(286): message :  see reference to class template instantiation 'AVLTree<T>' being compiled
+C:\Users\ryan.b\source\repos\Bachman_BinarySearchTree\Bachman_BinarySearchTree\AVLTree.h(131,15): error C3861:  'value': identifier not found
+  Generating Code...
+C:\Users\ryan.b\source\repos\Bachman_BinarySearchTree\Bachman_BinarySearchTree\AVLTree.h(286): message :  see reference to class template instantiation 'AVLTree<T>' being compiled
